@@ -73,8 +73,9 @@ nav a {
   color: #fff;
   text-decoration: blue;
 }
-#hero1{
+#hero1, #hero2 {
   padding-top: 3rem;
+  color:rgb(0,0,255);
 }
 #hero3 {
   color: yellow;
@@ -89,7 +90,6 @@ nav a {
   background-position: center;
   overflow: hidden;
   text-align: center;
-  color: rgb(0, 0, 139);
   padding: 5px;
 }
 
@@ -100,6 +100,7 @@ nav a {
 }
 
 .hero-content {
+  color: black;
   position: absolute;
   padding-top: 3rem;
   left: 0;
@@ -123,7 +124,7 @@ nav a {
 }
 
 .hero-content p {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 2rem;
 }
 
@@ -138,7 +139,7 @@ nav a {
 }
 
 .cta-button:hover {
-  background-color: #6b1a55;
+  background-color: red;
 }
 /*
 .cta-button {
