@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maids Data</title>
+  <!--<link rel="stylesheet" href="style.css"> </head>-->
+<style>
+body {
+  margin: 2px;
+  background-color: rgb(8, 8, 103);
+}
+#prev-page, #next-page {
+  display: inline-block;
+  background-color: #88236c;
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+}
+#prev-page:hover, #next-page:hover {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.card-container {
+  background-color: rgb(2, 2, 90);
+  width: 18rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+}
+
+@media only screen and (min-width: 300px) {
+  .card-container {
+    width: 100%;
+  }
+  }
+
+.card {
+  color:aqua;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 15px;
+  
+}
+
+.card img {
+  width: 6rem;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 4px 4px 0 0;
+  /* Center vertically and horizontally */
+  margin-left: 3rem;
+}
+
+/*.card-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.card-info .info-label {
+  font-weight: bold;
+  width: 30%;
+}
+.card-info .info-value {
+  width: 70%;
+}*/
+.card-info {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Divide into two columns */
+  gap: 0.5rem; /* Add spacing between key-value pairs (optional) */
+}
+
+.info-label,
+.info-value {
+  grid-column: 1; /* Both elements span the first column */
+}
+
+.info-value {
+  grid-column-start: 2; /* Value starts in the second column */
+}
+
+.info-label {
+  font-weight: bold; /* Distinguish label visually (optional) */
+}
+#items-per-page {
+  display: inline-block;
+  background-color: #88236c;
+  color: white;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+.pagination-controls {
+  margin-left: 10px;
+  position: sticky;
+  top: 2px;
+  background-color: black;
+  color: yellow;
+  font-size: 1.5rem;
+}
+.sort-container{
+  margin-left: 10px;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 1.8rem;
+  background-color: black;
+  color: yellow;
+}
+[id^='sort'] {
+  display: inline-block;
+  background-color: #88236c;
+  color: white;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  width: 9rem;
+}
+
+</style>
+</head>
+<body>
+  
+  <div class="pagination-controls">
+    <button id="prev-page" disabled>Previous</button>
+    <span id="current-page">Page 1</span>
+    <button id="next-page">Next</button>
+    <select id="items-per-page">
+      <option value="4">4 per Page</option>
+      <option value="8" selected>8 per Page</option>
+      <option value="12">12 per Page</option>
+    </select>
+  </div>
+  <div class="sort-container">
+    <label for="sort1">Sort By:</label>
+    <select class="sort-select" id="sort1" data-sort-order="ascending">
+      <option value="Nationality" selected>Nationality</option> </select>
+    </select>
+  
+    <label for="sort2">Sort By:</label>
+    <select class="sort-select" id="sort2" data-sort-order="ascending">
+      <option value="Age" selected>Age</option> </select>
+    </select>
+  
+    <label for="sort3">Sort By:</label>
+    <select class="sort-select" id="sort3" data-sort-order="ascending">
+      <option value="HeightWeight" selected>HeightWeight</option> </select>
+    </select>
+  </div>
+  <div class="card-container"></div>
+
+<script>
+  const maidsData = {
+    "MaidID01": {
+        "Name": "1AA- MYINT MYINT WIN",
+        "MaidImageUrl": "/images/MYINT MYINT WIN.jpg",
+        "DateOfBirth": "30-05-1986",
+        "Age": "37",
+        "PlaceOfBirth": "Zalum",
+        "HeightWeight": "155cm, 52 kg",
+        "Nationality": "Myanmar",
+        "HomeAddress": "Myanmar",
+        "ContactHomeCountry": "Upon Request",
+        "Religion": "Buddhist",
+        "EducationalLevel": "College",
+        "MaritalStatus": "Single",
+        "NumberOfSiblings": "6",
+        "OtherInfo": "NA"
+    },
+    "MaidId02": {
+        "Name": "1AA-MU MU MYINT",
+        "MaidImageUrl": "/images/MU MU MYINT.jpg",
+        "DateOfBirth": "19-05-1989",
+        "Age": "34",
+        "PlaceOfBirth": "PYINBONGYI",
+        "HeightWeight": "158 cm 57 kg",
+        "Nationality": "Myanmar",
+        "HomeAddress": "Myanmar",
+        "ContactHomeCountry": "Upon Request",
+        "Religion": "Buddhist",
+        "EducationalLevel": "Senior High School",
+        "MaritalStatus": "Single",
+        "NumberOfSiblings": "1",
+        "AgesOfChildren": "5",
+        "OtherInfo": "NA"
+    },
+    "MaidId03": {
+      "Name" : "1AA-SAN AYE", "MaidImageUrl" : "/images/SAN AYE.jpg", "DateOfBirth" : "28-08-1981", "Age" : "42", "PlaceOfBirth" : "THEGON", "HeightWeight" : "170 cm 75 kg", "Nationality" : "Myanmar", "HomeAddress" : "Myanmar", "ContactHomeCountry" : "Upon Request", "Religion" : "Buddhist", "EducationalLevel" : "Senior High School", "MaritalStatus" : "Single", "NumberOfSiblings" : "3", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId04": {
+      "Name" : " 1AA-THAN DAR KYAW", "MaidImageUrl" : "/images/THAN DAR KYAW.jpg", "DateOfBirth" : "04-12-1997", "Age" : "26", "PlaceOfBirth" : "PA-LET-WA", "HeightWeight" : " 155 cm 48 kg", "Nationality" : "Myanmar", "HomeAddress" : "Myanmar", "NameOfPort" : "YANGON", "ContactHomeCountry" : "Upon Request", "Religion" : "Buddhist", "EducationalLevel" : "Senior High School", "MaritalStatus" : "Single", "NumberOfSiblings" : "2", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId05": {
+      "Name" : "ELMA NURA SAVITRI", "MaidImageUrl" : "/images/ELMA NURA SAVITRI.jpeg", "DateOfBirth" : "17-02-1994", "Age" : "30", "PlaceOfBirth" : "Kediri", "HeightWeight" : "152 cm 46 kg", "Nationality" : "Indonesia", "HomeAddress" : "Indonesia", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "0", "AgesOfChildren" : "2", "OtherInfo" : "NA"
+    },
+    "MaidId06": {
+      "Name" : "ERNAWATI", "MaidImageUrl" : "/images/ERNAWATI.jpg", "DateOfBirth" : "26-Nov-1983", "Age" : "40", "PlaceOfBirth" : "MALANG", "HeightWeight" : "150 cm 48 kg", "Nationality" : "Indonesia", "HomeAddress" : "MALANG", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "4", "AgesOfChildren" : "7, 11", "OtherInfo" : "NA"
+    },
+    "MaidId07": {
+      "Name" : "1AA-Sari", "MaidImageUrl" : "/images/image7.jpg", "DateOfBirth" : "10-Mar-1978", "Age" : "46", "PlaceOfBirth" : "Kediri", "HeightWeight" : "152 cm 47 kg", "Nationality" : "Indonesia", "HomeAddress" : "Kediri", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "4", "AgesOfChildren" : "14, 15", "OtherInfo" : "NA"
+    },
+    "MaidId09": {
+      "Name" : "AA-Kristiani", "MaidImageUrl" : "/images/image8.jpg", "DateOfBirth" : "1-Nov-1989", "Age" : "34", "PlaceOfBirth" : "Kediri", "HeightWeight" : "152 cm 47 kg", "Nationality" : "Philipino", "HomeAddress" : "Palu", "NameOfPort" : "Palu", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Single", "NumberOfSiblings" : "4", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId10": {
+      "Name" : "Astri Dian Puspita", "MaidImageUrl" : "/images/Astri Dian Puspita.jpeg", "DateOfBirth" : "16-Mar-1990", "Age" : "34", "PlaceOfBirth" : "Labuhan Ratu South Lampung", "HeightWeight" : "152 cm 47 kg", "Nationality" : "Indonesia", "HomeAddress" : "NA", "NameOfPort" : "Raden Intan Bandar Lampung", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "2", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId11": {
+      "Name" : "MARIE ANN SANTOS ANDAM", "MaidImageUrl" : "/images/MARIE ANN SANTOS ANDAM.jpg", "DateOfBirth" : "6-Jun-1981", "Age" : "43", "PlaceOfBirth" : "QUEZON CITY, PHILIPPINES", "HeightWeight" : "163 cm 60 kg", "Nationality" : "Philippines", "HomeAddress" : "NA", "NameOfPort" : "Raden Intan Bandar Lampung", "ContactHomeCountry" : "Upon Request", "Religion" : "NA", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "7", "AgesOfChildren" : "16, 2", "OtherInfo" : "NA"
+    },
+    "MaidId12": {
+      "Name" : "AA-SUKMAWATI", "MaidImageUrl" : "/images/SUKMAWATI.jpeg", "DateOfBirth" : "4-Apr-1983", "Age" : "41", "PlaceOfBirth" : "NTB", "HeightWeight" : "157 cm 56 kg", "Nationality" : "Indonesia", "HomeAddress" : "NA", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "2", "AgesOfChildren" : "11, 14", "OtherInfo" : "NA, Request for more info"
+    },
+    "MaidId13": {
+      "Name" : "Riska Padjula", "MaidImageUrl" : "/images/Riska Padjula.jpeg", "DateOfBirth" : "1-May-1995", "Age" : "29", "PlaceOfBirth" : "Palu", "HeightWeight" : "152 cm 60 kg", "Nationality" : "Indonesia", "HomeAddress" : "Palu", "NameOfPort" : "Palu", "ContactHomeCountry" : "Upon Request", "Religion" : "Christian", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "2", "AgesOfChildren" : "11", "OtherInfo" : "NA"
+    },
+    "MaidId14": {
+        "Name": "1AA-MU MU MYINT",
+        "MaidImageUrl": "/images/MU MU MYINT.jpg",
+        "DateOfBirth": "19-05-1989",
+        "Age": "34",
+        "PlaceOfBirth": "PYINBONGYI",
+        "HeightWeight": "158 cm 57 kg",
+        "Nationality": "Myanmar",
+        "HomeAddress": "Myanmar",
+        "ContactHomeCountry": "Upon Request",
+        "Religion": "Buddhist",
+        "EducationalLevel": "Senior High School",
+        "MaritalStatus": "Single",
+        "NumberOfSiblings": "1",
+        "AgesOfChildren": "5",
+        "OtherInfo": "NA"
+    },
+    "MaidId15": {
+      "Name" : "1AA-SAN AYE", "MaidImageUrl" : "/images/SAN AYE.jpg", "DateOfBirth" : "28-08-1981", "Age" : "42", "PlaceOfBirth" : "THEGON", "HeightWeight" : "170 cm 75 kg", "Nationality" : "Myanmar", "HomeAddress" : "Myanmar", "ContactHomeCountry" : "Upon Request", "Religion" : "Buddhist", "EducationalLevel" : "Senior High School", "MaritalStatus" : "Single", "NumberOfSiblings" : "3", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId16": {
+      "Name" : " 1AA-DARI Gongola", "MaidImageUrl" : "/images/image16.jpg", "DateOfBirth" : "04-12-1997", "Age" : "26", "PlaceOfBirth" : "PA-LET-WA", "HeightWeight" : " 155 cm 48 kg", "Nationality" : "Philipino", "HomeAddress" : "Pes", "NameOfPort" : "Cebu", "ContactHomeCountry" : "Upon Request", "Religion" : "Christianity", "EducationalLevel" : "Senior High School", "MaritalStatus" : "Single", "NumberOfSiblings" : "2", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId17": {
+      "Name" : "Josephine Duterte", "MaidImageUrl" : "/images/image17.jpg", "DateOfBirth" : "17-02-1994", "Age" : "30", "PlaceOfBirth" : "Clarke Bay", "HeightWeight" : "152 cm 46 kg", "Nationality" : "Philipino", "HomeAddress" : "Phillipino", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "0", "AgesOfChildren" : "2", "OtherInfo" : "NA"
+    },
+    "MaidId18": {
+      "Name" : "ERNAWATI", "MaidImageUrl" : "/images/ERNAWATI.jpg", "DateOfBirth" : "26-Nov-1983", "Age" : "40", "PlaceOfBirth" : "MALANG", "HeightWeight" : "150 cm 48 kg", "Nationality" : "Philipino", "HomeAddress" : "MALANG", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "4", "AgesOfChildren" : "7, 11", "OtherInfo" : "NA"
+    },
+    "MaidId19": {
+      "Name" : "1AA-Sari", "MaidImageUrl" : "/images/image19.jpg", "DateOfBirth" : "10-Mar-1978", "Age" : "46", "PlaceOfBirth" : "Kediri", "HeightWeight" : "152 cm 47 kg", "Nationality" : "Indonesia", "HomeAddress" : "Kediri", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "4", "AgesOfChildren" : "14, 15", "OtherInfo" : "NA"
+    },
+    "MaidId20": {
+      "Name" : "AA-Kristiani", "MaidImageUrl" : "/images/image20.jpg", "DateOfBirth" : "1-Nov-1989", "Age" : "34", "PlaceOfBirth" : "Kediri", "HeightWeight" : "152 cm 47 kg", "Nationality" : "Philipino", "HomeAddress" : "Palu", "NameOfPort" : "Palu", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Single", "NumberOfSiblings" : "4", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId21": {
+      "Name" : "Astri Dian Puspita", "MaidImageUrl" : "/images/Astri Dian Puspita.jpeg", "DateOfBirth" : "16-Mar-1997", "Age" : "27", "PlaceOfBirth" : "Labuhan Ratu South Lampung", "HeightWeight" : "152 cm 47 kg", "Nationality" : "Indonesia", "HomeAddress" : "NA", "NameOfPort" : "Raden Intan Bandar Lampung", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "2", "AgesOfChildren" : "NA", "OtherInfo" : "NA"
+    },
+    "MaidId22": {
+      "Name" : "MARIE ANN SANTOS ANDAM", "MaidImageUrl" : "/images/MARIE ANN SANTOS ANDAM.jpg", "DateOfBirth" : "6-Jun-1981", "Age" : "43", "PlaceOfBirth" : "QUEZON CITY, PHILIPPINES", "HeightWeight" : "163 cm 60 kg", "Nationality" : "Philippines", "HomeAddress" : "NA", "NameOfPort" : "Raden Intan Bandar Lampung", "ContactHomeCountry" : "Upon Request", "Religion" : "NA", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "7", "AgesOfChildren" : "16, 2", "OtherInfo" : "NA"
+    },
+    "MaidId23": {
+      "Name" : "AA-SUKMAWATI", "MaidImageUrl" : "/images/SUKMAWATI.jpeg", "DateOfBirth" : "4-Apr-1983", "Age" : "41", "PlaceOfBirth" : "NTB", "HeightWeight" : "157 cm 56 kg", "Nationality" : "Indonesia", "HomeAddress" : "NA", "NameOfPort" : "Surabaya", "ContactHomeCountry" : "Upon Request", "Religion" : "Muslim", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "2", "AgesOfChildren" : "11, 14", "OtherInfo" : "NA, Request for more info"
+    },
+    "MaidId24": {
+      "Name" : "Riska Padjula", "MaidImageUrl" : "/images/Riska Padjula.jpeg", "DateOfBirth" : "1-May-1995", "Age" : "29", "PlaceOfBirth" : "Palu", "HeightWeight" : "152 cm 60 kg", "Nationality" : "Indonesia", "HomeAddress" : "Palu", "NameOfPort" : "Palu", "ContactHomeCountry" : "Upon Request", "Religion" : "Christian", "EducationalLevel" : "Junior High School", "MaritalStatus" : "Married", "NumberOfSiblings" : "2", "AgesOfChildren" : "11", "OtherInfo" : "NA"
+    }
+  }
+ 
+const cardContainer = document.querySelector('.card-container');
+const prevBtn = document.getElementById('prev-page');
+const nextBtn = document.getElementById('next-page');
+const currentPageEl = document.getElementById('current-page');
+const itemsPerPageSelect = document.getElementById('items-per-page');
+var globalSorted="";
+let currentPage = 1;
+let itemsPerPage = 8;
+let totalPages = Math.ceil(Object.keys(maidsData).length / itemsPerPage);
+const sortElements = document.querySelectorAll('.sort-select'); // Select all sort elements
+
+// Function to get unique keys from maids data (excluding MaidImageUrl and Name)
+function getUniqueKeys() {
+  const allKeys = new Set();
+  for (const maidId in maidsData) {
+    for (const key in maidsData[maidId]) {
+      if (key !== 'MaidImageUrl' && key !== 'Name') {
+        allKeys.add(key);
+      }
+    }
+  }
+  return allKeys;
+}
+
+const uniqueKeys = getUniqueKeys(); // Get all unique keys
+/*const uniqueKeysArr = [...uniqueKeysSet]; // Spread syntax to convert Set to array
+//const indexOfNationality = uniqueKeysArr.indexOf("Nationality");
+//console.log(uniqueKeysArr);
+var selectedKeys = ['Nationality', 'Age', 'HeightWeight'];
+
+const sortElement1 = document.getElementById('sort1');
+sortElement1.value = 'Nationality';
+const sortElement2 = document.getElementById('sort2');
+sortElement2.value = 'Age';
+const sortElement3 = document.getElementById('sort3');
+sortElement3.value = 'HeightWeight';*/
+// Set default sort options
+// sortElements[0].value = 'Nationality';
+// sortElements[1].value = 'Age';
+// sortElements[2].value = 'HeightWeight';
+// Function to update sort element options based on selected keys
+function populateSort() {
+  for (const sortElement of sortElements) {
+    sortElement.innerHTML = ''; // Clear existing options
+    for (const key of uniqueKeys) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = key;
+        sortElement.appendChild(option);
+    }
+  }
+}
+populateSort(); // Call initially to populate options
+// Set default sort options
+sortElements[0].value = 'Nationality';
+sortElements[1].value = 'Age';
+sortElements[2].value = 'HeightWeight';
+// Function to sort maids data based on selected key and order
+function sortMaids() {
+  //let sortedData = Object.entries(jsonData);
+  // Sort by sort1 value (if selected)
+  const sort1Key = sortElements[0].value;
+  const sort2Key = sortElements[1].value;
+  const sort3Key = sortElements[2].value;
+  // Function to sort the maidsData object
+  // Convert the maidsData object to an array
+  const maidsArray = Object.entries(maidsData);
+  console.log(maidsArray)
+  // Sort the array based on the selected keys
+  maidsArray.sort((a, b) => {
+    // Sort by the first key
+    if (a[1][sort1Key] < b[1][sort1Key]) return -1;
+    if (a[1][sort1Key] > b[1][sort1Key]) return 1;
+
+    // If the first key is equal, sort by the second key
+    if (a[1][sort2Key] < b[1][sort2Key]) return -1;
+    if (a[1][sort2Key] > b[1][sort2Key]) return 1;
+
+    // If the second key is also equal, sort by the third key
+    if (a[1][sort3Key] < b[1][sort3Key]) return -1;
+    if (a[1][sort3Key] > b[1][sort3Key]) return 1;
+
+    return 0;
+  });
+
+  // Convert the sorted array back to an object
+  const sortedMaidsData = {};
+  /*maidsArray.forEach((maid, index) => {
+    sortedMaidsData[`MaidId${String(index + 1).padStart(2, '0')}`] = maid;
+  });*/
+  maidsArray.forEach(([key, value]) => {
+    sortedMaidsData[key] = value;
+  });
+
+  // Update the maidsData object with the sorted data
+  globalSorted = sortedMaidsData;
+  //console.log(globalSorted);
+  displayCards(0, itemsPerPage, sortedMaidsData);
+}//end of sortMaids
+sortMaids();
+
+// Event listener for sort selection
+for (const sortElement of sortElements) {
+  sortElement.addEventListener('change', () => {
+    //updateSortOptions(); // Update options based on new selections
+    sortMaids(); // Sort data based on selections
+  });
+}
+//create crad for each maid ID
+function createCard(maidId) {
+  const maid = maidsData[maidId];
+  const card = document.createElement('div');
+  card.classList.add('card');
+  console.log(maid);
+  const img = document.createElement('img');
+  img.src = maid.MaidImageUrl;
+  card.appendChild(img);
+
+  const infoContainer = document.createElement('div');
+  infoContainer.classList.add('card-info');
+  for (const key in maid) {
+    if (key !== 'MaidImageUrl') {
+      const infoLabel = document.createElement('span');
+      infoLabel.classList.add('info-label');
+      infoLabel.textContent = key.replace(/([A-Z])/g, ' $1').trim(); // Add spaces before uppercase letters
+
+      const infoValue = document.createElement('span');
+      infoValue.classList.add('info-value');
+      infoValue.textContent = maid[key];
+
+      infoContainer.appendChild(infoLabel);
+      infoContainer.appendChild(infoValue);
+    }
+  }
+  card.appendChild(infoContainer);
+
+  // Append the card to the card container
+  cardContainer.appendChild(card);
+}
+
+// Call the createCard function for each maid data within the specified range
+function displayCards(startIndex, endIndex, jData) {
+  console.log(jData);
+  cardContainer.innerHTML = ''; // Clear existing cards before adding new ones
+  for (let i = startIndex; i < endIndex && i < Object.keys(jData).length; i++) {
+    createCard(Object.keys(jData)[i]);
+  }
+}
+// Set default sort options
+sortElements[0].value = 'Nationality';
+sortElements[1].value = 'Age';
+sortElements[2].value = 'HeightWeight';
+
+// Update page elements based on current page
+function updatePaginationElements() {
+  currentPageEl.textContent = `Page ${currentPage}`;
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages;
+}
+
+updatePaginationElements();
+
+// Event listeners for pagination buttons and items per page select
+prevBtn.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    displayCards((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage, globalSorted);
+    updatePaginationElements();
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    displayCards((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage, globalSorted);
+    updatePaginationElements();
+  }
+});
+itemsPerPageSelect.addEventListener('change', () => {
+  itemsPerPage = parseInt(itemsPerPageSelect.value); // Get the selected value
+  totalPages = Math.ceil(Object.keys(globalSorted).length / itemsPerPage); // Recalculate total pages
+  currentPage = 1; // Reset current page to 1
+  console.log(globalSorted);
+  displayCards(0, itemsPerPage, globalSorted); // Display first page based on new itemsPerPage
+  updatePaginationElements(); // Update page elements
+});
+
+</script>
+</body>
+</html>
