@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=""></meta>
+  <title>About Us</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="util.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0px;
+      box-sizing: border-box;
+      background-color: #111;
+      position: relative;
+      color: #fff;
+    }
+    img {
+      width: 10rem;
+      height: 8rem;
+    }
+    /*.pair {
+      display: flex;
+      justify-content: space-between;
+      width: 100%
+    }*/
+    .toggle-msg {
+      display: inline-block;
+      flex-basis: 30%;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid #3498db; /* Border color */
+      border-radius: 12px; /* Rounded corners */
+      transition: background-color 0.3s, color 0.3s; /* Smooth transition on hover */
+      animation: enlargeAndMove 4s ease-in-out; /* Apply animation */
+    }
+  .msg-hidden {
+    display: none;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 15px;
+    width: 100vw;
+    box-shadow: 0 0 10px rgb(255, 0, 149); /* Blue shadow */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav id="include-nav"></nav>
+  </header>
+  <!--Elements for titles-->
+  <img class="toggle-msg" id="title1" src="images/AeaLogo.png" alt="AEA Logo" onclick="toggleOption(event)">
+  <!--Elements for messages -->
+  <div class="msg-hidden"  id="msg1">Association of Employment Agencies (Singapore), also known as AEA(S): <br>working towards professionalism 
+    to uphold good practices in the Employment Agencies industry. 
+    <br>We seek to enhance professionalism among our members to be Trusted Service Providers.
+  </div>
+
+  <img class="toggle-msg" id="title2" src="images/AicLogo.png" alt="AIC Logo" onclick="toggleOption(event)">
+  <div class="msg-hidden"  id="msg2" >
+    <br>AIC - Caregiver Training - A comprehensive training programme for caregivers, including for Migrant Domestic Workers (MDWs) to learn how to assist 
+    your loved one’s daily activities.
+    <br>Enhancement for Active Seniors (EASE) - HDB subsidised home modifications
+    <li>Slip-resistant treatment to floor tiles in up to two bathrooms or toilets</li>
+    <li>Grab bars in the flat (eight or 10 grab bars for the first toilet, and six grab bars for the second toilet)</li>
+    <li>Up to five ramps in the flat, and/or at the main entrance – if it is doable</li>
+    <br>Financial Assistance ; -Subsidises care items ranging from wheelchairs and hearing aids to milk supplements
+    Home Caregiving Grant
+    The Home Caregiving Grant (HCG) payouts from the existing $200 per month to up to $400 per month on condition of income to recognise caregivers’ contributions and further reduce caregiving costs
+    Migrant Domestic Worker (MDW) Levy Concession - This concession reduces the cost of the levy from $300 to $60 a month.
+  </div>
+
+  <img class="toggle-msg" id="title3"  src="images/AaxonnLogo.png" alt="Aaxonn Logo" onclick="toggleOption(event)">
+  <div  class="msg-hidden"  id="msg3" >Aaxonn has been actively conducting Caregiver Training for Family caregivers and Foreign Domestic Workers (FDWs) caring for the elderly 
+    <br>-  Health and wellness workshops for caregivers of the elderly
+    <br>- Professional Healthcare Training Programs and Course Development
+    <br> - Home Nursing Services and Caregiver Services
+    <br>- Assessment and Certifications for Caregiver Training
+    <br>- Consultancy Services
+    <br>Our caregiver training is focused on endowing the family caregiver with the right skillset not only for the benefit of the elderly, but also to promote the caregiver's physical and mental wellbeing.
+    </div>
+
+<div class="toggle-msg" id="title4" onclick="toggleOption(event)">Head Title4</div>
+  <div  class="msg-hidden"  id="msg4" >Message 4 being shown. Click title again to hide</div>
+
+<div id="demo"></demo>
+<script>
+  var titleEle = document.querySelectorAll('.toggle-msg');
+  var msgIdObj={};
+  for(i=0; i<titleEle.length; i++){
+    msgIdObj[titleEle[i].id] = "msg"+(i+1);
+  }
+  function toggleOption(event, displayType) {
+    //get the clicked title element and its corresponding id of msg element
+    var clickedMsgEle= document.getElementById(msgIdObj[event.target.id]);
+    var allMsgEle = document.querySelectorAll('.msg-hidden');
+    allMsgEle.forEach(function(el) {
+      console.log(el.id+"=="+clickedMsgEle.id);
+      if (el.id === clickedMsgEle.id){
+        el.style.display=el.style.display === 'none' ? 'block' : 'none';
+;
+      } else {
+        el.style.display = 'none' 
+      }
+    });
+   }
+</script>
+</body>
+<script>
+  showNav();
+</script>
+</html>
