@@ -11,7 +11,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   background-color: darkblue;
-  color: #aaa;
+  color: #ccc;
   margin-top: 0;/*added to allow nav to be visible*/
 }
 .button-cta {
@@ -73,6 +73,7 @@ nav {
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   /*position: sticky;*/
+  color: white;
   background-color: darkblue;
   z-index: 9999;
 }
