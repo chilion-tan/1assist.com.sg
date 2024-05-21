@@ -12,6 +12,7 @@ body {
   line-height: 1.5;
   background-color: darkblue;
   color: #aaa;
+  margin-top: 30px;/*added to allow nav to be visible*/
 }
 /* Content section */
 .content-section {
