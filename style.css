@@ -16,7 +16,7 @@ body {
 }
 .button-cta {
   display: inline-block;
-  background-color: darkgrey;
+  background-color: #515;
   color: white;
   text-decoration: none;
   padding: 1rem 2rem;
