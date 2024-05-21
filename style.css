@@ -72,7 +72,7 @@ header {
 nav {
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
-  width: 100%y;
+  width: 100%;
   color: white;
   background-color: darkblue;
   z-index: 9999;
